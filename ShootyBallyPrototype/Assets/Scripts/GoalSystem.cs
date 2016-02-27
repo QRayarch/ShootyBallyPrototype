@@ -8,6 +8,7 @@ public class GoalSystem : MonoBehaviour
     public Vector2 ballStartPos;
     public float turretStartZAngle = 0;
     public bool symetricTurretAnngleStart = true;
+    public bool halfwayNonScoreStart = false;
 
     [Header("Setup")]
     public Transform ball;
@@ -21,7 +22,7 @@ public class GoalSystem : MonoBehaviour
     void Start()
     {
         ballZ = ball.position.z;
-        ResetRound();
+        ResetRound(null);
     }
 
     // Update is called once per frame
@@ -33,18 +34,18 @@ public class GoalSystem : MonoBehaviour
             {
                 playerTwo.score += 1;
                 needsReset = true;
-                ResetRound();
+                ResetRound(playerOne);
             }
             if (playerTwo.goal.WasScored)
             {
                 playerOne.score += 1;
                 needsReset = true;
-                ResetRound();
+                ResetRound(playerTwo);
             }
         }
     }
 
-    private void ResetRound()
+    private void ResetRound(PlayerInfo scoredOnPlayer)
     {
         needsReset = false;
         if(ball != null)
@@ -57,6 +58,12 @@ public class GoalSystem : MonoBehaviour
                 balltrail.startWidth = 0;
             }
             Vector3 ballPos = new Vector3(ballStartPos.x, ballStartPos.y, ballZ);
+            if(halfwayNonScoreStart && scoredOnPlayer != null)
+            {
+                Vector2 offsetPos = Vector2.Lerp(ballStartPos, scoredOnPlayer.transform.position, 0.5f);
+                ballPos.x = offsetPos.x;
+                ballPos.y = offsetPos.y;
+            }
             ball.transform.position = ballPos;
             if (balltrail != null)
             {
@@ -85,10 +92,10 @@ public class GoalSystem : MonoBehaviour
         {
             if(symetricTurretAnngleStart)
             {
-                playerTwo.turret.Reset(180 - turretStartZAngle);
+                playerTwo.turret.Reset( 180 + turretStartZAngle);
             } else
             {
-                playerTwo.turret.Reset(turretStartZAngle);
+                playerTwo.turret.Reset(-turretStartZAngle);
             }
 
         }
@@ -107,11 +114,11 @@ public class GoalSystem : MonoBehaviour
         {
             if (symetricTurretAnngleStart)
             {
-                Gizmos.DrawRay(playerTwo.turret.transform.position, Quaternion.Euler(0, 0, 180 - turretStartZAngle) * Vector3.up);
+                Gizmos.DrawRay(playerTwo.turret.transform.position, Quaternion.Euler(0, 0,  180 + turretStartZAngle) * Vector3.up);
             }
             else
             {
-                Gizmos.DrawRay(playerTwo.turret.transform.position, Quaternion.Euler(0, 0, turretStartZAngle) * Vector3.up);
+                Gizmos.DrawRay(playerTwo.turret.transform.position, Quaternion.Euler(0, 0, -turretStartZAngle) * Vector3.up);
             }
 
         }

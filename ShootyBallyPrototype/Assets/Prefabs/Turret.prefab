@@ -142,7 +142,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 129416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: -1.5, z: 7.975}
+  m_LocalPosition: {x: -5, y: 0, z: 7.975}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 462748}
@@ -269,7 +269,7 @@ MonoBehaviour:
   goal: {fileID: 21230968}
   playerColor: {r: 1, g: 0, b: 0, a: 1}
   player: 1
-  bulletSpeed: 80
+  bulletSpeed: 10
   fireRate: 0.5
   fireLead: 0.2
   turnRate: 28
@@ -284,7 +284,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &21230968
 SpriteRenderer:
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: db1588919a0a36645aebffcf37dbbc8f, type: 3}
-  m_Color: {r: 1, g: 0.2794118, b: 0.2794118, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
@@ -322,7 +322,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 129416}

@@ -5,6 +5,7 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
 
     public int maxNumberBounce = 0;
+    public float ballAddForce = 10;
 
     private Rigidbody body;
     private int numBounces = 0;
@@ -25,6 +26,11 @@ public class Bullet : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ball"))
         {
             numBounces = maxNumberBounce;
+            Rigidbody ballBody = collision.gameObject.GetComponent<Rigidbody>();
+            if(ballBody != null)
+            {
+                ballBody.AddForce(transform.up * ballAddForce, ForceMode.Impulse);
+            }
         }
         if(numBounces >= maxNumberBounce)
         {
