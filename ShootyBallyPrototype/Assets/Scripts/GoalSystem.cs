@@ -48,6 +48,15 @@ public class GoalSystem : MonoBehaviour
     private void ResetRound(PlayerInfo scoredOnPlayer)
     {
         needsReset = false;
+
+        //Destroy any left over bullets
+        Bullet[] bullets = GameObject.FindObjectsOfType<Bullet>();
+        for(int b = 0; b < bullets.Length; b++)
+        {
+            Destroy(bullets[b].gameObject);
+        }
+
+        //Reset ball
         if(ball != null)
         {
             TrailRenderer balltrail = ball.GetComponent<TrailRenderer>();
@@ -76,6 +85,7 @@ public class GoalSystem : MonoBehaviour
                 ballR.velocity = Vector3.zero;
             }
         }
+        //Reset players
         if(playerOne.goal != null)
         {
             playerOne.goal.Reset();

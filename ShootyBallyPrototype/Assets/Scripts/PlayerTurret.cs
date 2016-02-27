@@ -57,10 +57,8 @@ public class PlayerTurret : MonoBehaviour {
 
     private void Fire()
     {
-        Rigidbody newBullet = Instantiate(bulletPrefab) as Rigidbody;
+        Rigidbody newBullet = Instantiate(bulletPrefab, turretBarrel.position + turretBarrel.up * fireLead, Quaternion.Euler(0, 0, turretBarrel.rotation.eulerAngles.z)) as Rigidbody;
         newBullet.AddForce(turretBarrel.up * bulletSpeed, ForceMode.Impulse);
-        newBullet.transform.position = turretBarrel.position + turretBarrel.up * fireLead;
-        newBullet.transform.rotation = Quaternion.Euler(0, 0, turretBarrel.rotation.eulerAngles.z);
         //Physics.IgnoreCollision()
     }
 
