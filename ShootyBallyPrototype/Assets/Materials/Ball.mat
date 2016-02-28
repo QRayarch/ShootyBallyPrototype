@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ball
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 5e761d228a4888c458ac0a9065a83bb9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -90,7 +90,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.5
+        second: .5
       data:
         first:
           name: _ZWrite
@@ -98,7 +98,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.101
+        second: .101000004
       data:
         first:
           name: _Metallic
@@ -110,7 +110,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: 0.02
+        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -135,4 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.4622718, g: 0.63235295, b: 0.26967993, a: 1}
+        second: {r: .181896552, g: .25, b: .104779407, a: 1}

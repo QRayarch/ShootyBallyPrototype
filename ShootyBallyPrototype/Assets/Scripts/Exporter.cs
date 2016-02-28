@@ -7,7 +7,9 @@ using System.IO;
 public class Exporter : MonoBehaviour {
 
     private const string FILE_EXTENTION = "txt";
+    private const string IMAGE_FILE_EXTENTION = "png";//Note changing this does not actually change the file encoding
     private const string K_MAP_NAME = "name";
+    private const string K_MAP_IMAGE = "image";
     private const string K_POS = "pos";
     private const string K_ROT = "rot";
     private const string K_SCALE = "scl";
@@ -24,6 +26,9 @@ public class Exporter : MonoBehaviour {
     private const string K_ARENA = "arena";
 
     public string mapName = "Untitled";
+    public int imageWidth = 800;
+    public int imageHeight = 600;
+    public bool generateImage = true;
 
     public bool export = false;
 
@@ -47,8 +52,52 @@ public class Exporter : MonoBehaviour {
         if(path.Length != 0)
         {
             StreamWriter sw = File.CreateText(path);
+            GenerateMapPicture(path);
             GenerateMapFile(sw);
             sw.Close();
+        }
+    }
+
+    private void GenerateMapPicture(string path)
+    {
+        //Disable all Lighting
+        Light[] lights = GameObject.FindObjectsOfType<Light>();
+        for (int l = 0; l < lights.Length; l++)
+        {
+            lights[l].enabled = false;
+        }
+
+        GameObject cameraGameObject = new GameObject();
+        Camera mapCamera = cameraGameObject.AddComponent<Camera>();
+        mapCamera.orthographic = true;
+        //Adjust Camera
+        GoalSystem goalSys = GameObject.FindObjectOfType<GoalSystem>();
+        if (!goalSys)
+        {
+            Debug.LogError("--Export Image Warning--//The image export couldn't find a goal system so the image isn't centered accuratly.");
+            return;
+        }
+        float width = goalSys.arenaMax.x + goalSys.arenaMin.x;
+        float height = goalSys.arenaMax.y + goalSys.arenaMin.y;
+        mapCamera.transform.position = new Vector2(width, height) * 0.5f + goalSys.arenaMin;
+        mapCamera.orthographicSize = Mathf.Min(height / 2.0f, width * mapCamera.aspect / 2.0f);
+        //Continue the image saving
+        RenderTexture texture = new RenderTexture(imageWidth, imageHeight, 24);
+        mapCamera.targetTexture = texture;
+        Texture2D image = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
+        mapCamera.Render();
+        RenderTexture.active = texture;
+        image.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
+        RenderTexture.active = null;
+        byte[] imageData = image.EncodeToPNG();
+        string imagePath = path.Substring(0, path.LastIndexOf('.')) + "." + IMAGE_FILE_EXTENTION;
+        File.WriteAllBytes(imagePath, imageData);
+        //DestroyImmediate(cameraGameObject);
+        DestroyImmediate(texture);
+
+        for (int l = 0; l < lights.Length; l++)
+        {
+            lights[l].enabled = true;
         }
     }
 
@@ -56,6 +105,7 @@ public class Exporter : MonoBehaviour {
     {
         //Write the top level stuff
         sw.WriteLine(K_MAP_NAME + " " + mapName);
+        sw.WriteLine(K_MAP_IMAGE + " " + mapName + "." + IMAGE_FILE_EXTENTION);
 
         //Write the player turrets
         GoalSystem goalSys = GameObject.FindObjectOfType<GoalSystem>();

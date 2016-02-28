@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class GoalSystem : MonoBehaviour
 {
 
@@ -9,6 +10,8 @@ public class GoalSystem : MonoBehaviour
     public float turretStartZAngle = 0;
     public bool symetricTurretAnngleStart = true;
     public bool halfwayNonScoreStart = false;
+    public Vector2 arenaMin;
+    public Vector2 arenaMax;
 
     [Header("Setup")]
     public Transform ball;
@@ -113,6 +116,17 @@ public class GoalSystem : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        //Draw the bounds
+        Gizmos.color = Color.yellow;
+        Vector3 minX = new Vector3(arenaMin.x, 0, 0);
+        Vector3 minY = new Vector3(0, arenaMin.y, 0);
+        Vector3 maxX = new Vector3(arenaMax.x, 0, 0);
+        Vector3 maxY = new Vector3(0, arenaMax.y, 0);
+        Gizmos.DrawLine(transform.position - minX - minY, transform.position + maxX - minY);
+        Gizmos.DrawLine(transform.position - minX + maxY, transform.position + maxX + maxY);
+        Gizmos.DrawLine(transform.position - minX - minY, transform.position - minX + maxY);
+        Gizmos.DrawLine(transform.position + maxX - minY, transform.position + maxX + maxY);
+
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(new Vector3(ballStartPos.x, ballStartPos.y, ballZ), 0.4f);
         Gizmos.color = Color.magenta;

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Arena
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 5e761d228a4888c458ac0a9065a83bb9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -31,14 +31,14 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _LightTextureB0
+          name: _ShadowMapTexture
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ShadowMapTexture
+          name: _LightTextureB0
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -55,6 +55,13 @@ Material:
           name: _DetailNormalMap
         second:
           m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -106,13 +113,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ramp
-        second:
-          m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -125,7 +125,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.5
+        second: .5
       data:
         first:
           name: _ZWrite
@@ -133,11 +133,11 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.472
+        second: 0
       data:
         first:
           name: _Metallic
-        second: 1
+        second: 0
       data:
         first:
           name: _BumpScale
@@ -145,7 +145,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: 0.02
+        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -170,8 +170,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
+        second: {r: .0817474276, g: .0847452804, b: .0882353187, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}

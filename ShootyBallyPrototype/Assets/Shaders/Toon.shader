@@ -15,7 +15,7 @@
 
 		half4 LightingCelShadingForward(SurfaceOutput s, half3 lightDir, half atten) {
 		half NdotL = dot(s.Normal, lightDir);
-		NdotL = smoothstep(0, 0.025f, NdotL);
+		NdotL = smoothstep(0, 0.03f, NdotL);
 		half4 c;
 		c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
 		c.a = s.Alpha;
