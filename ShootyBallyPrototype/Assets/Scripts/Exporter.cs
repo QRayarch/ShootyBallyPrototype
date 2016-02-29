@@ -10,6 +10,7 @@ public class Exporter : MonoBehaviour {
     private const string IMAGE_FILE_EXTENTION = "png";//Note changing this does not actually change the file encoding
     private const string K_MAP_NAME = "name";
     private const string K_MAP_IMAGE = "image";
+    private const string K_MAP_BOUNDS = "bounds";
     private const string K_POS = "pos";
     private const string K_ROT = "rot";
     private const string K_SCALE = "scl";
@@ -79,8 +80,8 @@ public class Exporter : MonoBehaviour {
         }
         float width = goalSys.arenaMax.x + goalSys.arenaMin.x;
         float height = goalSys.arenaMax.y + goalSys.arenaMin.y;
-        mapCamera.transform.position = new Vector2(width, height) * 0.5f + goalSys.arenaMin;
-        mapCamera.orthographicSize = Mathf.Min(height / 2.0f, width * mapCamera.aspect / 2.0f);
+        mapCamera.transform.position = new Vector2(width, height) * 0.5f + (Vector2)goalSys.transform.position - goalSys.arenaMin;
+        mapCamera.orthographicSize = Mathf.Max(height / 2.0f, (width / (imageWidth / (float)imageHeight)) / 2.0f);
         //Continue the image saving
         RenderTexture texture = new RenderTexture(imageWidth, imageHeight, 24);
         mapCamera.targetTexture = texture;
@@ -92,7 +93,8 @@ public class Exporter : MonoBehaviour {
         byte[] imageData = image.EncodeToPNG();
         string imagePath = path.Substring(0, path.LastIndexOf('.')) + "." + IMAGE_FILE_EXTENTION;
         File.WriteAllBytes(imagePath, imageData);
-        //DestroyImmediate(cameraGameObject);
+        mapCamera.targetTexture = null;
+        DestroyImmediate(cameraGameObject);
         DestroyImmediate(texture);
 
         for (int l = 0; l < lights.Length; l++)
@@ -163,8 +165,10 @@ public class Exporter : MonoBehaviour {
 
         //Write the Arena
         Write(sw, K_ARENA);
+        sw.WriteLine(K_MAP_BOUNDS + " " + goalSys.arenaMin.x + " " + goalSys.arenaMin.y + " " + goalSys.arenaMax.x + " " + goalSys.arenaMax.y);
         GameObject[] arenaPieces = GameObject.FindGameObjectsWithTag("Export_Arena");
-        for (int a = 0; a < backgroundPieces.Length; a++)
+        Debug.Log("S " + arenaPieces.Length);
+        for (int a = 0; a < arenaPieces.Length; a++)
         {
             MeshFilter filter = arenaPieces[a].GetComponent<MeshFilter>();
             if (filter != null)
@@ -208,14 +212,14 @@ public class Exporter : MonoBehaviour {
 
     private void Write(StreamWriter sw, string prefix, Quaternion rot)
     {
-        Write(sw, prefix, rot.eulerAngles);
+        Write(sw, prefix, Mathf.Deg2Rad * rot.eulerAngles);
     }
 
     private void Write(StreamWriter sw, Transform t, bool pos = true, bool rot = true, bool scl = true)
     {
         if(pos) Write(sw, K_POS, t.position);
         if (rot) Write(sw, K_ROT, t.rotation);
-        if (scl) Write(sw, K_SCALE, t.localScale);
+        if (scl) Write(sw, K_SCALE, t.lossyScale);
     }
 
     private void Write(StreamWriter sw, Mesh m)
