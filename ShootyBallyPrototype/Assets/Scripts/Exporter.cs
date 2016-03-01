@@ -167,7 +167,6 @@ public class Exporter : MonoBehaviour {
         Write(sw, K_ARENA);
         sw.WriteLine(K_MAP_BOUNDS + " " + goalSys.arenaMin.x + " " + goalSys.arenaMin.y + " " + goalSys.arenaMax.x + " " + goalSys.arenaMax.y);
         GameObject[] arenaPieces = GameObject.FindGameObjectsWithTag("Export_Arena");
-        Debug.Log("S " + arenaPieces.Length);
         for (int a = 0; a < arenaPieces.Length; a++)
         {
             MeshFilter filter = arenaPieces[a].GetComponent<MeshFilter>();
