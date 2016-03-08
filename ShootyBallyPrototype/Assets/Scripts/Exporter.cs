@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.IO;
 
 [ExecuteInEditMode]
 public class Exporter : MonoBehaviour {
-
+#if UNITY_EDITOR
     private const string FILE_EXTENTION = "txt";
     private const string IMAGE_FILE_EXTENTION = "png";//Note changing this does not actually change the file encoding
     private const string K_MAP_NAME = "name";
@@ -249,4 +251,5 @@ public class Exporter : MonoBehaviour {
         if (s.IndexOf(' ') == -1) return s;
         return s.Substring(0, s.IndexOf(' '));
     }
+#endif
 }

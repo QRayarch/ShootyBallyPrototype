@@ -1903,7 +1903,7 @@ MonoBehaviour:
   mapName: Untitled
   imageWidth: 800
   imageHeight: 600
-  generateImage: 1
+  generateImage: 0
   export: 0
 --- !u!4 &2042958433
 Transform:
@@ -1916,4 +1916,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
