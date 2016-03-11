@@ -25,6 +25,7 @@ public class Exporter : MonoBehaviour {
     private const string K_BALL = "ball";
     private const string K_LIGHTING = "lights";
     private const string K_LIGHTING_TYPE = "lType";
+    private const string K_LIGHT_INTENSITY = "lIntensity";
     private const string K_BACKGROUND = "background";
     private const string K_ARENA = "arena";
 
@@ -144,6 +145,7 @@ public class Exporter : MonoBehaviour {
                 Write(sw, K_LIGHTING_TYPE, ((int)lights[l].type) - 1);
                 Write(sw, lights[l].transform, true, true, false);
                 Write(sw, K_COLOR, lights[l].color);
+                Write(sw, K_LIGHT_INTENSITY, lights[l].intensity);
             }
         }
 
