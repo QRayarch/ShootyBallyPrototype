@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -238,7 +239,19 @@ public class Exporter : MonoBehaviour {
         }
         if(textures || onlyTextures)
         {
-            Write(sw, mat.mainTexture);
+            List<Texture> textureList = new List<Texture>();
+            for(int p = 0; p < ShaderUtil.GetPropertyCount(mat.shader); p++)
+            {
+                if(ShaderUtil.GetPropertyType(mat.shader, p) == ShaderUtil.ShaderPropertyType.TexEnv)
+                {
+                    Texture t = mat.GetTexture(ShaderUtil.GetPropertyName(mat.shader, p));
+                    if(t != null)
+                    {
+                        textureList.Add(t);
+                    }
+                }
+            }
+            Write(sw, textureList);
         }
     }
 
@@ -246,6 +259,16 @@ public class Exporter : MonoBehaviour {
     {
         if (text == null) return;
         sw.WriteLine(K_TEXTURE + " " + RemoveAfterSpace(text.name));
+    }
+
+    private void Write(StreamWriter sw, List<Texture> textures)
+    {
+        string texturePaths = "";
+        for(int t = 0; t < textures.Count; t++)
+        {
+            texturePaths += RemoveAfterSpace(textures[t].name) + " ";
+        }
+        sw.WriteLine(K_TEXTURE + " " + texturePaths);
     }
 
     private string RemoveAfterSpace(string s)
