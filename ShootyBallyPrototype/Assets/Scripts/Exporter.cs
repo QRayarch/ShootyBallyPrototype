@@ -33,13 +33,16 @@ public class Exporter : MonoBehaviour {
     public string mapName = "Untitled";
     public int imageWidth = 800;
     public int imageHeight = 600;
+    public Vector3 exportRotation;
     public bool generateImage = true;
 
     public bool export = false;
 
+    private Quaternion rotation;
+
 	// Use this for initialization
 	void Start () {
-	
+	    
 	}
 	
 	// Update is called once per frame
@@ -52,6 +55,7 @@ public class Exporter : MonoBehaviour {
 
     public void Export()
     {
+        rotation = Quaternion.Euler(exportRotation);
         export = false;
         string path = EditorUtility.SaveFilePanel(mapName, "", mapName + "." + FILE_EXTENTION, FILE_EXTENTION);
         if(path.Length != 0)
@@ -216,13 +220,13 @@ public class Exporter : MonoBehaviour {
 
     private void Write(StreamWriter sw, string prefix, Quaternion rot)
     {
-        Write(sw, prefix, Mathf.Deg2Rad * rot.eulerAngles);
+        Write(sw, prefix, Mathf.Deg2Rad * (rot.eulerAngles));
     }
 
     private void Write(StreamWriter sw, Transform t, bool pos = true, bool rot = true, bool scl = true)
     {
-        if(pos) Write(sw, K_POS, t.position);
-        if (rot) Write(sw, K_ROT, t.rotation);
+        if(pos) Write(sw, K_POS, rotation * t.position);
+        if (rot) Write(sw, K_ROT, rotation * t.rotation);
         if (scl) Write(sw, K_SCALE, t.lossyScale);
     }
 

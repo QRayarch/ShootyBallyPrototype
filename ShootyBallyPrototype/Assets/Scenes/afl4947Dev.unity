@@ -17999,7 +17999,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 440782, guid: 3e38d6eb27b40c94b83b0211fb992089, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11423918, guid: 3e38d6eb27b40c94b83b0211fb992089, type: 2}
       propertyPath: ball
@@ -19854,6 +19854,7 @@ MonoBehaviour:
   mapName: Untitled
   imageWidth: 800
   imageHeight: 600
+  exportRotation: {x: 90, y: 0, z: 0}
   generateImage: 0
   export: 0
 --- !u!4 &2042958433
